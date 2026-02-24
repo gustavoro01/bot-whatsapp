@@ -1,10 +1,5 @@
-2026/02/24-18:51:25.744 2544 Reusing MANIFEST C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2026/02/24-18:51:25.745 2544 Recovering log #14
-2026/02/24-18:51:25.789 2544 Reusing old log C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000014.log 
-2026/02/24-18:51:28.024 663c Level-0 table #19: started
-2026/02/24-18:51:28.054 663c Level-0 table #19: 1277630 bytes OK
-2026/02/24-18:51:28.058 663c Delete type=0 #14
-2026/02/24-18:51:28.120 69e0 Compacting 1@1 + 1@2 files
-2026/02/24-18:51:28.172 69e0 Generated table #20@1: 45514 keys, 1707855 bytes
-2026/02/24-18:51:28.172 69e0 Compacted 1@1 + 1@2 files => 1707855 bytes
-2026/02/24-18:51:28.174 69e0 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/02/24-19:29:41.632 764c Reusing MANIFEST C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/02/24-19:29:41.633 764c Recovering log #18
+2026/02/24-19:29:41.646 764c Reusing old log C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000018.log 
+2026/02/24-19:29:41.646 764c Delete type=2 #16
+2026/02/24-19:29:41.646 764c Delete type=2 #19

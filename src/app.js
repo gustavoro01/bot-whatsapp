@@ -3,6 +3,7 @@
 // =====================================
 const qrcode = require("qrcode-terminal");
 const { Client, LocalAuth } = require("whatsapp-web.js");
+const express = require("express"); // Adicionado Express
 
 // =====================================
 // CONFIGURAÇÃO DO CLIENTE
@@ -192,9 +193,21 @@ client.on("message", async (msg) => {
     await typing();
     await client.sendMessage(
       msg.from,
-      "❌ Desculpe, não entendemos. Digite um número de 0 a 3 ou 'menu' para voltar ao início."
+          "❌ Ops! Não reconhecemos essa opção. Digite um número de 0 a 3 ou 'menu' para voltar."
     );
   } catch (error) {
     console.error("❌ Erro no processamento da mensagem:", error);
   }
 });
+
+// =====================================
+// EXPRESS SERVER PARA UPTIMEROBOT
+// =====================================
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Bot WhatsApp ativo ✅");
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
