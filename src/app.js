@@ -4,6 +4,7 @@
 const qrcode = require("qrcode-terminal");
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const express = require("express");
+const puppeteer = require("puppeteer-core"); // Apenas para ter certeza do path
 
 // =====================================
 // CONFIGURAÇÃO DO CLIENTE
@@ -11,8 +12,15 @@ const express = require("express");
 const client = new Client({
   authStrategy: new LocalAuth({ clientId: "default" }),
   puppeteer: {
-    headless: false,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: true, // necessário para rodar em servidor
+    executablePath: process.env.CHROME_PATH || "/usr/bin/chromium-browser", // usa Chrome se disponível, senão Chromium
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-extensions",
+      "--disable-gpu",
+    ],
   },
 });
 
@@ -41,7 +49,9 @@ client.on("disconnected", (reason) => {
 // =====================================
 // INICIALIZA
 // =====================================
-client.initialize();
+client.initialize().catch((err) => {
+  console.error("❌ Erro ao inicializar o cliente WhatsApp:", err);
+});
 
 // =====================================
 // FUNÇÃO DE DELAY
@@ -60,8 +70,7 @@ let timeoutMap = new Map(); // Para controlar timers de inatividade por usuário
 const encerrarPorInatividade = async (chatId) => {
   await client.sendMessage(
     chatId,
-    "⏳ Você ficou inativo por algum tempo.\n " +
-      "Encerramos o atendimento por enquanto.\n\n" +
+    "⏳ Você ficou inativo por algum tempo. Encerramos o atendimento por enquanto.\n\n" +
       "✅ Agradecemos seu contato! Quando quiser, é só nos enviar uma mensagem para reiniciar o atendimento."
   );
   atendimentoEncerrado = true;
@@ -193,7 +202,7 @@ client.on("message", async (msg) => {
     await typing();
     await client.sendMessage(
       msg.from,
-      "❌ Ops! Não reconhecemos essa opção. Digite 0 a 3 ou 'menu'."
+      "❌ Ops! Não reconhecemos essa opção. Digite um número de 0 a 3 ou 'menu' para visualizar o menu principal."
     );
   } catch (error) {
     console.error("❌ Erro no processamento da mensagem:", error);
@@ -209,5 +218,5 @@ app.get("/", (req, res) => {
   res.send("Bot WhatsApp ativo ✅");
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000; // Atualizado para 5000
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
