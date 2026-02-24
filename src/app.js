@@ -3,7 +3,7 @@
 // =====================================
 const qrcode = require("qrcode-terminal");
 const { Client, LocalAuth } = require("whatsapp-web.js");
-const express = require("express"); // Adicionado Express
+const express = require("express");
 
 // =====================================
 // CONFIGURAÇÃO DO CLIENTE
@@ -60,7 +60,7 @@ let timeoutMap = new Map(); // Para controlar timers de inatividade por usuário
 const encerrarPorInatividade = async (chatId) => {
   await client.sendMessage(
     chatId,
-    "⏳ Você ficou inativo por algum tempo. " +
+    "⏳ Você ficou inativo por algum tempo.\n " +
       "Encerramos o atendimento por enquanto.\n\n" +
       "✅ Agradecemos seu contato! Quando quiser, é só nos enviar uma mensagem para reiniciar o atendimento."
   );
@@ -193,7 +193,7 @@ client.on("message", async (msg) => {
     await typing();
     await client.sendMessage(
       msg.from,
-          "❌ Ops! Não reconhecemos essa opção. Digite um número de 0 a 3 ou 'menu' para voltar."
+      "❌ Ops! Não reconhecemos essa opção. Digite 0 a 3 ou 'menu'."
     );
   } catch (error) {
     console.error("❌ Erro no processamento da mensagem:", error);
