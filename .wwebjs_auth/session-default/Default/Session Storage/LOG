@@ -1,3 +1,2 @@
-2026/02/25-10:09:18.095 3198 Reusing MANIFEST C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Session Storage/MANIFEST-000001
-2026/02/25-10:09:18.115 3198 Recovering log #3
-2026/02/25-10:09:18.117 3198 Reusing old log C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Session Storage/000003.log 
+2026/02/25-10:25:07.517 1a48 Creating DB C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Session Storage since it was missing.
+2026/02/25-10:25:07.544 1a48 Reusing MANIFEST C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Session Storage/MANIFEST-000001

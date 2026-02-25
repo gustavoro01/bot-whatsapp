@@ -1,3 +1,2 @@
-2026/02/25-10:09:13.817 4a54 Reusing MANIFEST C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Site Characteristics Database/MANIFEST-000001
-2026/02/25-10:09:13.830 4a54 Recovering log #3
-2026/02/25-10:09:13.831 4a54 Reusing old log C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Site Characteristics Database/000003.log 
+2026/02/25-10:25:07.461 35f8 Creating DB C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Site Characteristics Database since it was missing.
+2026/02/25-10:25:07.497 35f8 Reusing MANIFEST C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Site Characteristics Database/MANIFEST-000001

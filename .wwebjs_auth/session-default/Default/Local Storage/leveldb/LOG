@@ -1,5 +1,2 @@
-2026/02/25-10:09:13.827 3198 Reusing MANIFEST C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Local Storage\leveldb/MANIFEST-000001
-2026/02/25-10:09:13.844 3198 Recovering log #3
-2026/02/25-10:09:13.845 3198 Level-0 table #3: started
-2026/02/25-10:09:13.851 3198 Level-0 table #3: 17590 bytes OK
-2026/02/25-10:09:13.857 3198 Delete type=0 #3
+2026/02/25-10:25:07.517 4dd8 Creating DB C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Local Storage\leveldb since it was missing.
+2026/02/25-10:25:07.539 4dd8 Reusing MANIFEST C:\Users\gusta\OneDrive\Área de Trabalho\chatbot-loja\.wwebjs_auth\session-default\Default\Local Storage\leveldb/MANIFEST-000001

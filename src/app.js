@@ -155,9 +155,9 @@ client.on("message", async (msg) => {
         msg.from,
         "🛒 Perfeito! Fazer seu pedido é rápido e fácil:\n" +
           "- Pelo WhatsApp: envie a lista dos produtos que deseja\n" +
-          "- Pelo site: www.sualoja.com.br\n" +
-          "- Pelo Instagram: @sualoja\n\n" +
-          "Ou nos diga qual produto você deseja adquirir, e nosso time irá te ajudar rapidinho.\n" +
+          "- Pelo site: www.linharetastore.com.br\n" +
+          "- Pelo Instagram: @linha.retastore\n\n" +
+          "Ou nos diga qual produto você deseja adquirir, e nosso time irá te atender rapidinho.\n" +
           "Digite 'menu' a qualquer momento para voltar ao início."
       );
       return;
