@@ -3,7 +3,8 @@
 // =====================================
 const qrcode = require("qrcode-terminal");
 const { Client, LocalAuth } = require("whatsapp-web.js");
-const express = require("express"); // Adicionado Express
+const express = require("express");
+const puppeteer = require("puppeteer"); // Puppeteer completo com Chromium incluso
 
 // =====================================
 // CONFIGURAÇÃO DO CLIENTE
@@ -11,8 +12,14 @@ const express = require("express"); // Adicionado Express
 const client = new Client({
   authStrategy: new LocalAuth({ clientId: "default" }),
   puppeteer: {
-    headless: false,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    headless: true, // necessário para servidor/Replit
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-extensions",
+      "--disable-gpu",
+    ],
   },
 });
 
@@ -39,9 +46,17 @@ client.on("disconnected", (reason) => {
 });
 
 // =====================================
-// INICIALIZA
+// INICIALIZAÇÃO DO CLIENTE COM TRATAMENTO DE ERROS
 // =====================================
-client.initialize();
+const initClient = async () => {
+  try {
+    await client.initialize();
+  } catch (err) {
+    console.error("❌ Erro ao inicializar o WhatsApp:", err);
+    setTimeout(initClient, 10000); // tenta reinicializar em 10s
+  }
+};
+initClient();
 
 // =====================================
 // FUNÇÃO DE DELAY
@@ -60,8 +75,7 @@ let timeoutMap = new Map(); // Para controlar timers de inatividade por usuário
 const encerrarPorInatividade = async (chatId) => {
   await client.sendMessage(
     chatId,
-    "⏳ Você ficou inativo por algum tempo. " +
-      "Encerramos o atendimento por enquanto.\n\n" +
+    "⏳ Você ficou inativo por algum tempo.\n Encerramos o atendimento por enquanto.\n\n" +
       "✅ Agradecemos seu contato! Quando quiser, é só nos enviar uma mensagem para reiniciar o atendimento."
   );
   atendimentoEncerrado = true;
@@ -90,7 +104,7 @@ client.on("message", async (msg) => {
     if (timeoutMap.has(msg.from)) clearTimeout(timeoutMap.get(msg.from));
     timeoutMap.set(
       msg.from,
-      setTimeout(() => encerrarPorInatividade(msg.from), 10 * 60 * 1000) // 10 minutos
+      setTimeout(() => encerrarPorInatividade(msg.from), 10 * 60 * 1000)
     );
 
     // =====================================
@@ -100,7 +114,7 @@ client.on("message", async (msg) => {
       await typing();
       await client.sendMessage(
         msg.from,
-        "✅ Atendimento encerrado. Agradecemos seu contato e esperamos vê-lo em breve! 👕"
+        "✅ Atendimento encerrado.\n Agradecemos seu contato e esperamos vê-lo em breve! 👕"
       );
       atendimentoEncerrado = true;
       clearTimeout(timeoutMap.get(msg.from));
@@ -108,24 +122,15 @@ client.on("message", async (msg) => {
       return;
     }
 
-    // =====================================
-    // REINÍCIO DO FLUXO APÓS ENCERRAMENTO
-    // =====================================
-    if (atendimentoEncerrado) {
-      atendimentoEncerrado = false;
-    }
+    if (atendimentoEncerrado) atendimentoEncerrado = false;
 
     // =====================================
     // MENSAGEM INICIAL OU MENU
     // =====================================
     if (
-      texto.includes("menu") ||
-      texto.includes("oi") ||
-      texto.includes("olá") ||
-      texto.includes("ola") ||
-      texto.includes("bom dia") ||
-      texto.includes("boa tarde") ||
-      texto.includes("boa noite")
+      ["menu", "oi", "olá", "ola", "bom dia", "boa tarde", "boa noite"].some((v) =>
+        texto.includes(v)
+      )
     ) {
       await typing();
       await client.sendMessage(
@@ -134,7 +139,7 @@ client.on("message", async (msg) => {
           "Aqui na nossa loja, cada atendimento é feito com atenção e rapidez.\n\n" +
           "Escolha a opção que melhor atende você:\n" +
           "1️⃣ Fazer pedido\n" +
-          "2️⃣ Informações sobre envio\n" +
+          "2️⃣ Informações sobre envios e fretes\n" +
           "3️⃣ Falar diretamente com nossa equipe\n" +
           "0️⃣ Encerrar atendimento"
       );
@@ -180,7 +185,7 @@ client.on("message", async (msg) => {
       await typing();
       await client.sendMessage(
         msg.from,
-        "📞 Ótimo! Você escolheu falar com nossa equipe.\n" +
+        "📞 Ótimo! Você iniciou o atendimento com nossa equipe.\n" +
           "Nos conte sua dúvida, nosso time vai te responder com atenção e rapidez.\n" +
           "Digite 'menu' para voltar ao início quando quiser."
       );
@@ -193,7 +198,7 @@ client.on("message", async (msg) => {
     await typing();
     await client.sendMessage(
       msg.from,
-      "❌ Desculpe, não entendemos. Digite um número de 0 a 3 ou 'menu' para voltar ao início."
+      "❌ Ops! Não reconhecemos essa opção. Digite um número de 0 a 3 ou 'menu' para voltar ao menu principal."
     );
   } catch (error) {
     console.error("❌ Erro no processamento da mensagem:", error);
@@ -209,5 +214,15 @@ app.get("/", (req, res) => {
   res.send("Bot WhatsApp ativo ✅");
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+
+// =====================================
+// KEEP-ALIVE DO CLIENTE
+// =====================================
+setInterval(async () => {
+  if (!client.info || !client.info.pushname) {
+    console.log("⚠️ Bot não está ativo, tentando reiniciar...");
+    await initClient();
+  }
+}, 5 * 60 * 1000); // verifica a cada 5 minutos
