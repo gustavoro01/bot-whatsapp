@@ -1,3 +1,4 @@
+
 {
   "name": "chatbot-loja",
   "version": "1.0.0",
@@ -6,7 +7,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node src/app.js",
-    "postinstall": "PUPPETEER_CACHE_DIR=/opt/render/project/.cache/puppeteer node node_modules/puppeteer/lib/cjs/puppeteer/node/cli.js browsers install chrome"
+    "postinstall": "node node_modules/puppeteer/lib/cjs/puppeteer/node/cli.js browsers install chrome"
   },
   "engines": {
     "node": "20.x"
