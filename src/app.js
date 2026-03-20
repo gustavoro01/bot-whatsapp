@@ -213,7 +213,7 @@ client.on("message", async (msg) => {
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Bot WhatsApp ativo ✅");
+  res.status(200).send("Bot WhatsApp ativo ✅");
 });
 
 const PORT = process.env.PORT || 5000;
@@ -228,3 +228,8 @@ setInterval(async () => {
     await initClient();
   }
 }, 5 * 60 * 1000); // verifica a cada 5 minutos
+
+// const PORT = process.env.PORT || 8080;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
