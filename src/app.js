@@ -9,10 +9,12 @@ const puppeteer = require("puppeteer"); // Puppeteer completo com Chromium inclu
 // =====================================
 // CONFIGURAÇÃO DO CLIENTE
 // =====================================
+
 const client = new Client({
   authStrategy: new LocalAuth({ clientId: "default" }),
   puppeteer: {
-    headless: true, // necessário para servidor/Replit
+    headless: true,
+    executablePath: puppeteer.executablePath(),
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
