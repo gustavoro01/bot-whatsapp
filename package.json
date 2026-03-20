@@ -5,7 +5,11 @@
   "main": "src/app.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "postinstall": "node node_modules/puppeteer/lib/cjs/puppeteer/node/cli.js browsers install chrome"
+  },
+  "engines": {
+    "node": "20.x"
   },
   "author": "",
   "license": "ISC",
